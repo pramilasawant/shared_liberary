@@ -70,7 +70,7 @@ def call() {
                 stage('Deploy Java Application') {
                     steps {
                         script {
-                            sh "helm upgrade --install java-app ./helm/java --set image.repository=pramila188/testhello --set image.tag=${env.BUILD_NUMBER} --namespace test1"
+                            sh "helm upgrade --install java-app ./helm/java --set image.repository=pramila188/testhello --set image.tag=${env.BUILD_NUMBER} --namespace test"
                         }
                     }
                 }
