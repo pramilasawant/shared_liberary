@@ -65,7 +65,7 @@ def call() {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
+        stage('Deploy to Kubernetes with helm') {
             parallel {
                 stage('Deploy Java Application') {
                     steps {
