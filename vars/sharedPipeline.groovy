@@ -15,6 +15,7 @@ def call() {
             string(name: 'PYTHON_IMAGE_NAME', defaultValue: 'python-app', description: 'Python Docker Image Name')
             string(name: 'JAVA_NAMESPACE', defaultValue: 'test', description: 'Kubernetes Namespace for Java Application')
             string(name: 'PYTHON_NAMESPACE', defaultValue: 'python', description: 'Kubernetes Namespace for Python Application')
+            string(name: 'VERSION', defaultValue: '1.0.0', description: 'Version number for the build')
         }
 
         stages {
@@ -42,7 +43,7 @@ def call() {
                             dir('testhello') { // Ensure this directory contains the pom.xml
                                 sh 'mvn clean install'
                                 script {
-                                    def image = docker.build("${params.DOCKERHUB_USERNAME}/${params.JAVA_IMAGE_NAME}")
+                                    def image = docker.build("${params.DOCKERHUB_USERNAME}/${params.JAVA_IMAGE_NAME}:${params.VERSION}")
                                     docker.withRegistry('', 'dockerhubpwd') {
                                         image.push()
                                     }
@@ -54,7 +55,7 @@ def call() {
                         steps {
                             dir('python-app') {
                                 script {
-                                    def image = docker.build("${params.DOCKERHUB_USERNAME}/${params.PYTHON_IMAGE_NAME}")
+                                    def image = docker.build("${params.DOCKERHUB_USERNAME}/${params.PYTHON_IMAGE_NAME}:${params.VERSION}")
                                     docker.withRegistry('', 'dockerhubpwd') {
                                         image.push()
                                     }
